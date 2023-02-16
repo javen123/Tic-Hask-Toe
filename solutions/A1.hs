@@ -6,36 +6,41 @@ import Data.Char (toUpper)
 
 -- Q#01
 
-_SIZE_ = undefined
+_SIZE_ = 3 :: Int
 
 -- Q#02
 
-_DISPLAY_LOGO_ = undefined
+_DISPLAY_LOGO_ = True
 
 -- Q#03
-
-convertRowIndex = undefined
+convertRowIndex :: Char -> Int
+convertRowIndex x = fromEnum (toUpper x) - 65
 
 -- Q#04
 
-_INVALID_MOVE_ = undefined
+_INVALID_MOVE_ = (-1 :: Int,-1 :: Int)
 
 -- Q#05
 
-_SEP_ = undefined
+_SEP_ = ['_','|','_']
 
 -- *** Assignment 1-2 *** --
 
 -- Q#06
-data Square
+data Square = X | O | Neither deriving (Show, Eq)
 
 
 -- Q#07
-data GameState
+data GameState = XWon | OWon | Tie | InProgress deriving (Show, Eq)
 
 
 -- Q#08
 
+type Player = Square
+type Row = [Square]
+type Line = [Square]
+type Board = [Row]
+type Move = (Int, Int)
 
 
 
@@ -43,20 +48,35 @@ data GameState
 
 -- Q#09
 
-getFirstPlayer = undefined
+getFirstPlayer :: Bool -> Player
+getFirstPlayer b = if b then X else O
 
-
-getFirstPlayer_ = undefined
+getFirstPlayer_ b
+    | b = X
+    | otherwise = O
 
 -- Q#10
 
-showGameState gs = undefined
+showGameState :: GameState -> String
+showGameState gs  = case gs of XWon -> "X won the game"
+                               OWon -> "O won the game"
+                               Tie -> "Game ends in a tie"
+                               InProgress -> "Game still in progress"
+   
 
 -- Q#11
 
-switchPlayer = undefined
+switchPlayer :: Player -> Player
+switchPlayer p 
+    | p == X = O
+    | p == O = X
+    | otherwise = Neither
 
 
 -- Q#12
 
-showSquare = undefined
+showSquare :: Square -> String
+showSquare p = case p of X -> "X"
+                         O -> "O"
+                         Neither -> "_"
+                         
