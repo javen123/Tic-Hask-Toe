@@ -8,7 +8,9 @@ import Data.Array (Ix(range))
 import Control.Monad.RWS (All(getAll))
 import System.Posix.Internals (puts)
 import Data.Char
-import Data.Text (replace)
+import Data.Text (replace, Text)
+import qualified Data.Text as T
+import qualified Data.Char as T
 
 -- *** Assignment 3-1 ***
 
@@ -73,8 +75,8 @@ getAllLines xs = getDiag1 xs : getDiag2 xs : xs ++ transpose xs
 putSquare :: Player -> Board -> Move -> Board
 putSquare _ [] _ = []
 putSquare p b m = 
-    let (x,_:xs) = splitAt fst m b 
-        
+    let (x,_:xs) = splitAt (fst m) b 
+    in x ++ replaceSquareInRow p (snd m) x : xs
 
 -- Q#08
 
@@ -87,3 +89,4 @@ isWinningLine = undefined
 -- Q#10
 
 isValidMove = undefined
+
